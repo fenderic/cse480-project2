@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>CSE480 : Project 2</title>
+    <?php
+      session_start();
+      session_destroy();
+     ?>
+  </head>
+  
+  <body>
+
+    <center>
+      <h1>CSE 480 : Project 2</h1>
+      <h2>PHP Login</h2>
+
+      <p>
+	by Eric Austin (austine5) and Garret Smith (smithg35)
+      </p>
+</br>
+</br>
+</br>
+      <table width="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+	<tr>
+	  <form name="form1" method="post" action="checklogin.php">
+	    <td>
+	      <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
+		<tr>
+		  <td colspan="3"><strong>User Login</strong></td>
+		</tr>
+		<tr>
+		  <td width="78">UserID</td>
+		  <td width="6">:</td>
+		  <td width="294"><input name="myuserID" type="text" id="myuserID"></td>
+		</tr>
+		<tr>
+		  <td>Password</td>
+		  <td>:</td>
+		  <td><input name="mypassword" type="text" id="mypassword"></td>
+		</tr>
+		<tr>
+		  <td>&nbsp;</td>
+		  <td>&nbsp;</td>
+		  <td><input type="submit" name="Submit" value="Login"></td>
+		</tr>
+	      </table>
+	    </td>
+	  </form>
+	</tr>
+      </table>
+</br>
+</br>
+</br
+      <p>Click <a href="./Project2PrintUsers.php">here</a> to view all the users in the database</p>
+      <p>You can test functionality by signing in with one of those userIDs and it's password</p>
+    </center>
+  </body>
+</html>
