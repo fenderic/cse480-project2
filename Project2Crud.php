@@ -152,7 +152,12 @@ function course_read_all(){
 	return $retVal;
 }
 
-function course_seat_update($courseNo) {
+function course_seat_update($courseNo, $currentSeats, $maxSeats) {
+	if ($currentSeats >= $maxSeats)
+	{
+	  echo "<b>There is no room in the class!</b>";
+	  return;
+	}
 
 	$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die(mysql_error());
 	$query = sprintf(course_seat_update_qry, $courseNo);

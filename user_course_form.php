@@ -16,9 +16,9 @@ include_once "./Project2Crud.php";
 		$n++;
 	}*/
 
-	if(sizeof($_POST["update"]) > 0) {
+	if(sizeof($_POST["updateSeat"]) > 0) {
 		echo "</br><b>Change saved</b></br>";
-		course_seat_update($courses[$seq]->get_courseNo());
+		course_seat_update($courses[$seq]->get_courseNo(),$courses[$seq]->get_currentSeats(),$courses[$seq]->get_maxSeats());
 
 	}
 	
@@ -46,7 +46,6 @@ include_once "./Project2Crud.php";
 		echo "<input type=\"hidden\" name=\"seq\" value=\"";
 		echo $course->get_seq();
 		echo "\">";
-		echo $seq;
 
 		echo "<tr>";
 		
@@ -59,8 +58,22 @@ include_once "./Project2Crud.php";
 		echo "</td>";
 		
 		echo "<td>";
-		echo $course->get_currentSeats();
-		echo "</td>";
+		if ($course->get_seq() == $seq)
+		{
+		  if ($course->get_maxSeats() == $course->get_currentSeats())
+		  {
+		    echo $course->get_currentSeats();
+		  }
+		  else
+		  {
+		    echo $course->get_currentSeats()+1;
+		  }
+		}
+		else
+		{
+		  echo $course->get_currentSeats();
+		}
+		  echo "</td>";
 		
 		echo "<td>";
 		echo $course->get_maxSeats();
@@ -69,7 +82,7 @@ include_once "./Project2Crud.php";
 		
 		
 		echo "<td>";
-		echo "<input type=\"submit\" name=\"update\" value=\"Enroll\"/>";
+		echo "<input type=\"submit\" name=\"updateSeat\" value=\"Enroll\"/>";
 		echo "</td>";
 
 		echo "</tr>";
