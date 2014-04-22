@@ -11,3 +11,8 @@ echo ("</br></br></br>");
 If you would like to change your password, you can do so with the following form.
 
 <?php include "user_password_form.php" ?>
+
+<br><br><br>
+If you would like to enroll in courses, you can do so with the following form.
+
+<?php include "user_course_form.php" ?>

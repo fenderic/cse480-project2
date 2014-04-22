@@ -1,6 +1,7 @@
 <?php
 include_once "./CrudSettings.php";
 include_once "./Project2User.php";
+include_once "./Project2Course.php";
 //Define database
 
 // QUERIES
@@ -11,6 +12,8 @@ define("user_update_qry","update Project2 set userID='%s', password=%d, isAdmin=
 define("user_delete_qry","delete from Project2 where userID='%s'");
 define("user_reset_qry","update Project2 set password=555 WHERE userID='%s'");
 define("user_insert_qry","insert into Project2 values(NULL, '%s', %d, %d)");
+define("course_read_all_qry", "select * from course;");
+define("course_seat_update_qry", "update course set currentSeats= (currentSeats+1) where courseNo=%d");
 
 function user_read_all(){
 	$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die(mysql_error());
@@ -126,7 +129,43 @@ function user_insert($newUserID, $newPassword, $newIsAdmin) {
 
 }
 
+function course_read_all(){
+	$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die(mysql_error());
+	$query = course_read_all_qry;
+	$result = mysqli_query($connection, $query);
+	if(!$result) { 
+		die("Could not read all Courses" . mysqli_error($connection));
+	}
+	$retVal = Array();
+	$i = 0;
+	while($row = $result->fetch_row()) {
+		$courseNo = $row[0]; 
+		$courseName = $row[1];
+		$seq = $row[2];
+		$maxSeats = $row[3];
+		$currentSeats = $row[4];
+		$course = new Course($courseNo, $courseName, $maxSeats, $currentSeats, $seq);
+		$retVal[$i] = $course;
+		$i++;
+	}
+	mysqli_close($connection);
+	return $retVal;
+}
 
+function course_seat_update($courseNo) {
+
+	$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die(mysql_error());
+	$query = sprintf(course_seat_update_qry, $courseNo);
+	$result = mysqli_query($connection, $query);
+
+	if(!$result) { 
+		die("Could not update" . mysqli_error($connection));
+	}
+
+	mysqli_close($connection);
+	return $retVal;
+
+}
 
 ?>
 
