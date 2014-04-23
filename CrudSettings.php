@@ -9,5 +9,6 @@ define("DB_PASS", "A43567692");
 //DB_NAME if your cse login
 define("DB_NAME", "austine5");
 
-
+// DEADLINE added to limit enrollment
+//define("DEADLINE", strtotime("May 1 2014"));
 ?>

@@ -3,6 +3,11 @@
 
 <?php
 include_once "./Project2Crud.php";
+	
+	// The deadline for course enrollment
+	$deadline = strtotime("May 1 2014");	  // A deadline that has NOT passed
+	//$deadline = strtotime("April 1 2014");  // A deadline that has passed
+
 	$courses = course_read_all();
 
 	$seq = $_POST["seq"];
@@ -18,7 +23,7 @@ include_once "./Project2Crud.php";
 
 	if(sizeof($_POST["updateSeat"]) > 0) {
 		echo "</br><b>Change saved</b></br>";
-		course_seat_update($courses[$seq]->get_courseNo(),$courses[$seq]->get_currentSeats(),$courses[$seq]->get_maxSeats());
+		course_seat_update($courses[$seq]->get_courseNo(),$courses[$seq]->get_currentSeats(),$courses[$seq]->get_maxSeats(), $deadline);
 
 	}
 	
@@ -58,14 +63,18 @@ include_once "./Project2Crud.php";
 		echo "</td>";
 		
 		echo "<td>";
-		if ($course->get_seq() == $seq)
+		
+		// check if deadline has passed and the sequence number of the class for the button that had enroll clicked.
+		if (($course->get_seq() == $seq) && (time() < $deadline))
 		{
+		  // compare maxSeats value to currentSeats value
 		  if ($course->get_maxSeats() == $course->get_currentSeats())
 		  {
 		    echo $course->get_currentSeats();
 		  }
 		  else
 		  {
+		    //increment the currentSeat number!
 		    echo $course->get_currentSeats()+1;
 		  }
 		}

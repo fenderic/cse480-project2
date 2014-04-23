@@ -15,6 +15,7 @@ define("user_insert_qry","insert into Project2 values(NULL, '%s', %d, %d)");
 define("course_read_all_qry", "select * from course;");
 define("course_seat_update_qry", "update course set currentSeats= (currentSeats+1) where courseNo=%d");
 
+
 function user_read_all(){
 	$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die(mysql_error());
 	$query = user_read_all_qry;
@@ -152,12 +153,21 @@ function course_read_all(){
 	return $retVal;
 }
 
-function course_seat_update($courseNo, $currentSeats, $maxSeats) {
+function course_seat_update($courseNo, $currentSeats, $maxSeats, $deadline) {
+	
+	// if there is no room in class, don't enroll!
 	if ($currentSeats >= $maxSeats)
 	{
 	  echo "<b>There is no room in the class!</b>";
 	  return;
 	}
+	
+	// if the deadline has passed, don't enroll!
+	if (time() > $deadline)
+	{
+	  echo "<b>Enrollment Deadline has been passed.  Cannot enroll you in classes.</b>";
+	  return;
+	 }
 
 	$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die(mysql_error());
 	$query = sprintf(course_seat_update_qry, $courseNo);
