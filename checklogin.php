@@ -26,8 +26,15 @@ $result=mysql_query($sql);
 
 
 $admin_check=mysql_fetch_assoc(mysql_query("SELECT isAdmin FROM $tbl_name WHERE userID='$myuserID' and password='$mypassword'"));
-
 $isAdmin = $admin_check["isAdmin"];
+
+$took_check=mysql_fetch_assoc(mysql_query("SELECT * FROM $tbl_name WHERE userID='$myuserID' and password='$mypassword'"));
+$took100 = $took_check["took100"];
+$took231 = $took_check["took231"];
+$took232 = $took_check["took232"];
+$took331 = $took_check["took331"];
+$took335 = $took_check["took335"];
+//print_r(mysql_fetch_assoc($result));
 
 // Mysql_num_row is counting table row
 $count=mysql_num_rows($result);
@@ -39,6 +46,13 @@ if($count==1){
 $_SESSION["myuserID"] = $myuserID;
 $_SESSION["mypassword"] = $mypassword;
 $_SESSION["isAdmin"] = $isAdmin;
+
+// Session variables for enrollment
+$_SESSION["took100"] = $took100;
+$_SESSION["took231"] = $took231;
+$_SESSION["took232"] = $took232;
+$_SESSION["took331"] = $took331;
+$_SESSION["took335"] = $took335;
 
 if ($isAdmin == 1):
   header("location:admin_success.php");

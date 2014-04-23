@@ -89,9 +89,37 @@ include_once "./Project2Crud.php";
 		echo "</td>";
 		
 		
+		$enabled = "<input type=\"submit\" name=\"updateSeat\" value=\"Enroll\"/>";
 		
 		echo "<td>";
-		echo "<input type=\"submit\" name=\"updateSeat\" value=\"Enroll\"/>";
+		// if they have taken prereqs and have not enrolled. allow enrolled
+		if (($course->get_courseNo() == '100') && ($_SESSION["took100"] == 0))
+		{
+		  echo $enabled;
+		}
+		else if (($course->get_courseNo() == '231' && ($_SESSION["took231"] == 0)))
+		{
+		  echo $enabled;
+		}
+		else if (($course->get_courseNo() == '232' && ($_SESSION["took232"] == 0) && ($_SESSION["took231"] == 1)))
+		{
+		  echo $enabled;
+		}
+		else if (($course->get_courseNo() == '331' && ($_SESSION["took331"] == 0) && ($_SESSION["took232"] == 1)))
+		{
+		  echo $enabled;
+		}
+		else if (($course->get_courseNo() == '335' && ($_SESSION["took335"] == 0) && ($_SESSION["took232"] == 1)))
+		{
+		  echo $enabled;
+		}
+		else
+		{
+		  echo "<input type=\"submit\" name=\"updateSeat\" value=\"Enroll\" disabled/>";
+		}
+
+		// if they have not taken prereqs and/or have enrolled, disable enrolled
+		//echo "<input type=\"submit\" name=\"updateSeat\" value=\"Enroll\" disabled/>";
 		echo "</td>";
 
 		echo "</tr>";
